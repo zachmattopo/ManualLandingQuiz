@@ -31,40 +31,44 @@ const InfoScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ height: height * 0.1 }} />
-      <View style={styles.imageContainer}>
-        <Text style={[
-          styles.number, 
-          currentIndex === 1 && styles.numberSecondSlide
-        ]}>
-          {String(currentIndex + 1).padStart(2, '0')}
-        </Text>
-        <Image
-          style={[
-            styles.image,
-            currentIndex === 1 && styles.imageSecondSlide
-          ]}
-          source={getImageSource(currentItem.assetID)}
-        />
-      </View>
-      <View style={{ height: height * 0.08 }} />
-      <Text style={styles.header}>{currentItem.header}</Text>
-      <Text style={styles.title}>{currentItem.title}</Text>
-      <Text style={styles.subtitle}>{currentItem.subtitle}</Text>
-      <View style={{ height: height * 0.05 }} />
-      <View style={styles.pagination}>
-        {learnMoreData.data.map((_, index) => (
-          <View
-            key={index}
-            style={index === currentIndex ? styles.dotActive : styles.dot}
+      <View style={styles.content}>
+        <View style={styles.topSpacing} />
+        <View style={styles.imageSection}>
+          <Text style={[
+            styles.number, 
+            currentIndex === 1 && styles.numberSecondSlide
+          ]}>
+            {String(currentIndex + 1).padStart(2, '0')}
+          </Text>
+          <Image
+            style={[
+              styles.image,
+              currentIndex === 1 && styles.imageSecondSlide
+            ]}
+            source={getImageSource(currentItem.assetID)}
           />
-        ))}
+        </View>
+        <View style={styles.textSection}>
+          <Text style={styles.header}>{currentItem.header}</Text>
+          <Text style={styles.title}>{currentItem.title}</Text>
+          <Text style={styles.subtitle}>{currentItem.subtitle}</Text>
+        </View>
+        <View style={styles.bottomSection}>
+          <View style={styles.pagination}>
+            {learnMoreData.data.map((_, index) => (
+              <View
+                key={index}
+                style={index === currentIndex ? styles.dotActive : styles.dot}
+              />
+            ))}
+          </View>
+          <CustomButton
+            title={currentIndex === learnMoreData.data.length - 1 ? "DONE" : "NEXT"}
+            colour="#0B3B3C"
+            onPress={handleNext}
+          />
+        </View>
       </View>
-      <CustomButton
-        title={currentIndex === learnMoreData.data.length - 1 ? "DONE" : "NEXT"}
-        colour="#0B3B3C"
-        onPress={handleNext}
-      />
     </SafeAreaView>
   );
 };
@@ -72,12 +76,27 @@ const InfoScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: "#ECF0EB",
   },
-  imageContainer: {
+  content: {
+    flex: 1,
+    padding: 20,
+  },
+  topSpacing: {
+    flex: 1,
+  },
+  imageSection: {
     position: "relative",
     width: '100%',
+    flex: 3,
+  },
+  textSection: {
+    flex: 2,
+    justifyContent: 'center',
+  },
+  bottomSection: {
+    flex: 2,
+    justifyContent: 'flex-end',
   },
   image: {
     width: 175,
@@ -124,7 +143,7 @@ const styles = StyleSheet.create({
   pagination: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 40,
+    marginBottom: 20,
   },
   dot: {
     width: 8,
