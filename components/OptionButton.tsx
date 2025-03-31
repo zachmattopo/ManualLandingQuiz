@@ -1,26 +1,21 @@
-import React from "react";
+import React, { Key } from "react";
 import { TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native";
 
 const { height, width } = Dimensions.get("window");
 
-interface CustomButtonProps {
+interface OptionButtonProps {
   title: string;
   colour: string;
-  disabled?: boolean;
+  buttonKey?: Key | null | undefined;
   onPress: () => void;
 }
 
-const CustomButton = ({ 
-  title, 
-  colour, 
-  disabled = false, 
-  onPress 
-}: CustomButtonProps) => {
+const OptionButton = ({ title, colour, buttonKey, onPress }: OptionButtonProps) => {
   return (
     <TouchableOpacity
+      key={buttonKey}
       style={[styles.button, { backgroundColor: colour }]}
       onPress={onPress}
-      disabled={disabled}
     >
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
@@ -29,16 +24,19 @@ const CustomButton = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 100,
-    paddingVertical: height * 0.02,
+    borderRadius: 10,
+    paddingVertical: 8,
     paddingHorizontal: width * 0.3,
+    borderWidth: 1,
+    borderColor: "#A5B79F",
+    marginVertical: 8,
   },
   buttonText: {
-    fontFamily: "TTNorms-Regular",
-    fontSize: 16,
-    color: "#FFFFFF",
+    fontFamily: "TTNorms-Medium",
+    fontSize: 28,
+    color: "#0B3B3C",
     textAlign: "center",
   },
 });
 
-export default CustomButton;
+export default OptionButton;

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import CustomButton from "../components/CustomButton";
 
 const MyApp = () => {
@@ -9,13 +9,7 @@ const MyApp = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerShown: false,
-          presentation: "modal",
-        }}
-      />
-      <View style={styles.topSection}>
+      <View style={[styles.topSection, styles.topPadding]}>
         <View style={styles.logoContainer}>
           <Image source={require("../assets/images/manual-logo.png")} />
         </View>
@@ -44,7 +38,7 @@ const MyApp = () => {
         <CustomButton
           title="TAKE THE QUIZ"
           colour="#7E0707"
-          onPress={() => {}}
+          onPress={() => router.push("/(quiz)/1")}
         />
       </View>
     </SafeAreaView>
@@ -59,6 +53,9 @@ const styles = StyleSheet.create({
   topSection: {
     flex: 0.75,
     justifyContent: "flex-end",
+  },
+  topPadding: {
+    paddingTop: 150, // Add padding to account for status bar and dynamic island
   },
   middleSection: {
     flex: 3,

@@ -2,23 +2,26 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function RootLayout() {
   const router = useRouter();
 
   return (
-    <>
+    <SafeAreaProvider>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen
           name="InfoScreen"
           options={{
             headerShown: true,
+            presentation: "modal",
             header() {
               return (
                 <View style={styles.container}>
-                  <TouchableOpacity 
-                    style={styles.closeButton} 
+                  <TouchableOpacity
+                    style={styles.closeButton}
                     onPress={() => router.back()}
                   >
                     <Text style={styles.closeButtonText}>✕</Text>
@@ -29,10 +32,33 @@ export default function RootLayout() {
             },
           }}
         />
+        <Stack.Screen
+          name="(quiz)"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="results"
+          options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: "#ECF0EB",
+            },
+            headerTitleStyle: {
+              fontFamily: "TTNorms-Regular",
+              fontWeight: "400",
+              fontSize: 22,
+            },
+            headerTitle: "Quiz",
+            headerShadowVisible: false,
+            headerBackVisible: false,
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="light" />
-    </>
+    </SafeAreaProvider>
   );
 }
 
