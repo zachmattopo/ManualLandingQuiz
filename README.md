@@ -1,50 +1,114 @@
-# Welcome to your Expo app 👋
+# Manual Landing Quiz App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native quiz application built with Expo, featuring a dynamic questionnaire system and state management.
 
-## Get started
+## Project Structure
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+ManualLandingQuiz/
+├── app/                   # Main application screens and routing
+│   ├── (quiz)/            # Quiz-related screens
+│   ├── _layout.tsx        # Root layout configuration
+│   ├── +not-found.tsx     # Error handling page for unknown urls
+│   ├── index.tsx          # Landing page
+│   ├── InfoScreen.tsx     # Learn more page
+│   └── results.tsx        # Quiz results page
+├── assets/                # Static assets (images, fonts, json)
+│   ├── images/
+│   ├── fonts/           
+│   └── json/              # Quiz and learn more data
+├── atoms/                 # Jotai atoms for state management
+└── components/            # Reusable UI components
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## State Management
 
-## Learn more
+### Local State (useState)
+Used for component-level state management and UI state (selected options, current question).
 
-To learn more about developing your project with Expo, look at the following resources:
+In-app example:
+```typescript
+const [selectedAnswer, setSelectedAnswer] = useState<Option | null>(null);
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Global State (Jotai)
+Used for app-wide state management, in this case a boolean flag to keep track if any answer selected is a cause for rejection.
 
-## Join the community
+In-app example:
+```typescript
+// atoms/quizState.ts
+import { atom } from 'jotai';
 
-Join our community of developers creating universal apps.
+export const hasRejectionAtom = atom<boolean>(false);
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Architecture
+
+### Component Structure
+- Presentational components in `/components`
+- Screen components in `/app`
+
+### Routing
+Uses Expo Router for file-based routing:
+- Dynamic routes with `[id].tsx`
+- Grouped routes in `(quiz)`
+- Modal presentations
+
+### Data Flow
+1. User interactions trigger state updates
+2. State changes propagate through Jotai atoms
+3. Components re-render based on state changes
+4. Navigation handled by Expo Router
+
+## Next steps to implement ⏳
+
+- Replace the simple state management with a more robust solution (leaning towards MobX) to futureproof against future needs and requirements.
+- Add unit tests to the business logics and mappers above.
+- Separate out the theme (primary colours, font styles, etc.) to a global file to follow DRY principle.
+- Fix the issue where custom font (TT Norms) not being loaded at all.
+
+## Getting Started
+
+1. Install dependencies
+```bash
+npm install
+```
+
+2. Start the development server
+```bash
+npx expo start
+```
+
+3. Run on iOS Simulator
+```bash
+npx expo run:ios
+```
+
+4. Run on Android Emulator
+```bash
+npx expo run:android
+```
+
+## Development
+
+### Prerequisites
+- Node.js 16 or later
+- Xcode for iOS development
+- Android Studio for Android development
+
+### Environment Setup
+1. Install Expo CLI
+```bash
+npm install -g expo-cli
+```
+
+2. Install development dependencies
+```bash
+npm install --save-dev
+```
+
+## Learn More
+
+- [Expo Documentation](https://docs.expo.dev/)
+- [Jotai Documentation](https://jotai.org/)
+- [React Native Documentation](https://reactnative.dev/)
